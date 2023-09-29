@@ -11,26 +11,24 @@ import mg.tonymushah.starts.graphql.classes.Author;
 import mg.tonymushah.starts.graphql.classes.Book;
 
 @Controller
-public class BookController {
-
+public class AuthorController {
     @SchemaMapping
-    public Author author(Book book) {
-        return Author.getById(book.getAuthorId());
+    public List<Book> books(Author author, @Argument int offset, @Argument int limit) {
+        return Book.getAuthorBooks(author, offset, limit);
     }
 
     @QueryMapping
-    public Book bookById(@Argument String id) {
-        return Book.getById(id);
+    public Author authorById(@Argument String id) {
+        return Author.getById(id);
     }
 
-    @QueryMapping
-    public List<Book> books(@Argument List<String> ids, @Argument int offset, @Argument int limit) {
+    public List<Author> authors(@Argument List<String> ids, @Argument int offset, @Argument int limit) {
         if (ids == null) {
-            return Book.getBooks(offset, limit);
+            return Author.getAuthors(offset, limit);
         } else if (ids.size() == 0) {
-            return Book.getBooks(offset, limit);
+            return Author.getAuthors(offset, limit);
         } else {
-            return Book.getBooks(ids, offset, limit);
+            return Author.getAuthors(ids, offset, limit);
         }
     }
 }

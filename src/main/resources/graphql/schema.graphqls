@@ -1,5 +1,8 @@
 type Query {
     bookById(id: ID): Book
+    authorById(id: ID) : Author
+    books(ids : [ID!], offset : Int = 0, limit : Int = 10) : [Book]!
+    authors(ids : [ID!], offset : Int = 0, limit : Int = 10) : [Author]!
 }
 
 type Book {
@@ -13,4 +16,5 @@ type Author {
     id: ID
     firstName: String
     lastName: String
+    books(offset: Int = 0, limit : Int = 10): [Book]!
 }

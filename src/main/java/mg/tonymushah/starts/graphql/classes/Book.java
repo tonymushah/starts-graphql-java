@@ -16,12 +16,11 @@ public class Book {
         this.setPageCount(pageCount);
         this.setAuthorId(authorId);
     }
-    
+
     private static List<Book> books = Arrays.asList(
             new Book("book-1", "Harry Potter and the Philosopher's Stone", 223, "author-1"),
             new Book("book-2", "Moby Dick", 635, "author-2"),
-            new Book("book-3", "Interview with the vampire", 371, "author-3")
-    );
+            new Book("book-3", "Interview with the vampire", 371, "author-3"));
 
     public static Book getById(String id) {
         return books.stream().filter(book -> book.getId().equals(id)).findFirst().orElse(null);
@@ -57,5 +56,29 @@ public class Book {
 
     public String getAuthorId() {
         return authorId;
+    }
+
+    public static List<Book> getAuthorBooks(Author author, int offset, int limit) {
+        return books
+                .stream()
+                .filter((book) -> book.getAuthorId().equals(author.getId()))
+                .skip(offset)
+                .limit(limit)
+                .toList();
+    }
+    public static List<Book> getBooks(List<String> ids, int offset, int limit){
+        return books
+                .stream()
+                .filter((book) -> ids.contains(book.getId()))
+                .skip(offset)
+                .limit(limit)
+                .toList();
+    }
+    public static List<Book> getBooks(int offset, int limit){
+        return books
+                .stream()
+                .skip(offset)
+                .limit(limit)
+                .toList();
     }
 }
