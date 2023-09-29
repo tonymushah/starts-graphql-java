@@ -28,13 +28,13 @@ type Author {
 
 input InputBook{
     id: ID
-    name: String
-    pageCount: Int
+    name: String!
+    pageCount: Int!
     authorId: String
 }
 
 input InputAuthor{
     id: ID
-    firstName: String
-    lastName: String
+    firstName: String!
+    lastName: String!
 }
