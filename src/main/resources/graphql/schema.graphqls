@@ -1,8 +1,15 @@
 type Query {
     bookById(id: ID): Book
     authorById(id: ID) : Author
-    books(ids : [ID!], offset : Int = 0, limit : Int = 10) : [Book]!
-    authors(ids : [ID!], offset : Int = 0, limit : Int = 10) : [Author]!
+    books(ids: [ID!], offset: Int = 0, limit: Int = 10) : [Book]!
+    authors(ids: [ID!], offset: Int = 0, limit: Int = 10) : [Author]!
+}
+
+type Mutation {
+    createBook(book: Book!) : Book
+    createAuthor(author: Author!) : Author
+    deleteAuthors(ids: [String!]!) : [Author!]!
+    deleteBooks(ids: [Book!]!): [Book!]!
 }
 
 type Book {
@@ -16,5 +23,5 @@ type Author {
     id: ID
     firstName: String
     lastName: String
-    books(offset: Int = 0, limit : Int = 10): [Book]!
+    books(offset: Int = 0, limit: Int = 10): [Book]!
 }

@@ -1,9 +1,13 @@
 package mg.tonymushah.starts.graphql.classes;
 
-import java.util.Arrays;
-import java.util.List;
-
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+@Entity
 public class Author {
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
     private String firstName;
     private String lastName;
@@ -32,40 +36,12 @@ public class Author {
         this.lastName = lastName;
     }
 
-    public Author(String id, String firstName, String lastName) {
-        this.setId(id);
+    public Author(String firstName, String lastName) {
         this.setFirstName(firstName);
-        ;
         this.setLastName(lastName);
-        ;
     }
 
-    public Author() {
+    protected Author() {
     }
-
-    private static List<Author> authors = Arrays.asList(
-            new Author("author-1", "Joanne", "Rowling"),
-            new Author("author-2", "Herman", "Melville"),
-            new Author("author-3", "Anne", "Rice"));
-
-    public static Author getById(String id) {
-        return authors.stream().filter(author -> author.getId().equals(id)).findFirst().orElse(null);
-    }
-
-    public static List<Author> getAuthors(List<String> ids, int offset, int limit) {
-        return authors
-                .stream()
-                .filter((author) -> ids.contains(author.getId()))
-                .skip(offset)
-                .limit(limit)
-                .toList();
-    }
-
-    public static List<Author> getAuthors(int offset, int limit) {
-        return authors
-                .stream()
-                .skip(offset)
-                .limit(limit)
-                .toList();
-    }
+    
 }
