@@ -6,10 +6,10 @@ type Query {
 }
 
 type Mutation {
-    createBook(book: Book!) : Book
-    createAuthor(author: Author!) : Author
+    createBook(book: InputBook!) : Book
+    createAuthor(author: InputAuthor!) : Author
     deleteAuthors(ids: [String!]!) : [Author!]!
-    deleteBooks(ids: [Book!]!): [Book!]!
+    deleteBooks(ids: [String!]!): [Book!]!
 }
 
 type Book {
@@ -24,4 +24,17 @@ type Author {
     firstName: String
     lastName: String
     books(offset: Int = 0, limit: Int = 10): [Book]!
+}
+
+input InputBook{
+    id: ID
+    name: String
+    pageCount: Int
+    authorId: String
+}
+
+input InputAuthor{
+    id: ID
+    firstName: String
+    lastName: String
 }
