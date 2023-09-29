@@ -22,6 +22,7 @@ public class AuthorController {
         return Author.getById(id);
     }
 
+    @QueryMapping
     public List<Author> authors(@Argument List<String> ids, @Argument int offset, @Argument int limit) {
         if (ids == null) {
             return Author.getAuthors(offset, limit);
