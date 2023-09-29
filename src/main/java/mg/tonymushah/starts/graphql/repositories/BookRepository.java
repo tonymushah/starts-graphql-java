@@ -30,7 +30,8 @@ public interface BookRepository extends CrudRepository<Book, String>, PagingAndS
                 .limit(limit)
                 .toList();
     }
-    default List<Book> getBooks(List<String> ids, int offset, int limit){
+
+    default List<Book> getBooks(List<String> ids, int offset, int limit) {
         return StreamSupport
                 .stream(this.findAllById(ids).spliterator(), true)
                 .filter((book) -> book != null)
@@ -38,7 +39,11 @@ public interface BookRepository extends CrudRepository<Book, String>, PagingAndS
                 .limit(limit)
                 .toList();
     }
-    default List<Book> deleteBookViaAuthorsIds(List<String> ids){
-        
+
+    default List<Book> deleteBookViaAuthorsIds(List<String> ids) {
+        List<Book> books = StreamSupport.stream(this.findAll().spliterator(), true)
+                .filter(book -> ids.contains(book.getAuthorId())).toList();
+        this.deleteAll(books);
+        return books;
     }
 }
