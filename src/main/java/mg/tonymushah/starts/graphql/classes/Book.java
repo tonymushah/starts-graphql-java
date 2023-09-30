@@ -1,9 +1,15 @@
 package mg.tonymushah.starts.graphql.classes;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 
 @Entity
 public class Book {
@@ -13,7 +19,12 @@ public class Book {
     private String id;
     private String name;
     private int pageCount;
+    @Column(insertable = false, updatable = false)
     private String authorId;
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @JoinColumn(name = "authorId")
+    @JsonIgnore
+    private Author author;
 
     public Book(String name, int pageCount, String authorId) {
         this.setName(name);
@@ -54,4 +65,12 @@ public class Book {
     }
 
     protected Book(){}
+
+    public Author getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(Author author) {
+        this.author = author;
+    }
 }

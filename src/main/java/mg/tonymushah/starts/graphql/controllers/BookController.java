@@ -1,6 +1,8 @@
 package mg.tonymushah.starts.graphql.controllers;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.StreamSupport;
 
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
@@ -31,11 +33,13 @@ public class BookController {
 
     @SchemaMapping
     public Author author(Book book) {
-        if(book.getAuthorId() != null){
-            return this.authorRepository.findById(book.getAuthorId()).orElse(null);
-        }else{
-            return null;
-        }
+        return Optional.of(book.getAuthor()).orElseGet(() -> {
+            if(book.getAuthorId() != null){
+                return this.authorRepository.findById(book.getAuthorId()).orElse(null);
+            }else{
+                return null;
+            }
+        });
     }
 
     /*
@@ -63,8 +67,14 @@ public class BookController {
      * Here we place all @MutationMapping
      * 
      */
+
     @MutationMapping
     public Book createBook(@Argument Book book){
         return this.bookRepository.save(book);
+    }
+    public List<Book> deleteBooks(@Argument List<String> ids){
+        List<Book> books = StreamSupport.stream(this.bookRepository.findAllById(ids).spliterator(), true).toList();
+        this.bookRepository.deleteAll(books);
+        return books;
     }
 }

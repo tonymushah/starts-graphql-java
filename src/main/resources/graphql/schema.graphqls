@@ -8,8 +8,8 @@ type Query {
 type Mutation {
     createBook(book: InputBook!) : Book
     createAuthor(author: InputAuthor!) : Author
-    deleteAuthors(ids: [String!]!) : [Author!]!
-    deleteBooks(ids: [String!]!): [Book!]!
+    deleteAuthors(ids: [String!]!) : [Author]
+    deleteBooks(ids: [String!]!): [Book]
 }
 
 type Book {
@@ -30,7 +30,7 @@ input InputBook{
     id: ID
     name: String!
     pageCount: Int!
-    authorId: String
+    authorId: String!
 }
 
 input InputAuthor{
